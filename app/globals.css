@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+/* FIX: biar scroll ke #about / #home / dll pas di bawah navbar */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px; /* sesuaikan tinggi navbar kamu */
+}
+* {
+  cursor: true;
+}
+@keyframes floaty {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+.animate-float {
+  animation: floaty 4s ease-in-out infinite;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes floaty {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+.animate-float { animation: floaty 4s ease-in-out infinite; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px; /* sesuaikan tinggi navbar kamu */
+}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-h, 80px);
+}
