@@ -15,17 +15,33 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Hafidz Maulana — Portfolio",
   description:
-    "Automation & IoT Engineering Student — building practical projects with sensors, data, and web dashboards.",
+    "Automation & IoT Engineering portfolio showcasing projects, experience, and skills.",
   icons: {
-    icon: "/icon.png", // ⬅️ favicon baru kamu
+    icon: "/icon.png",
+  },
+  openGraph: {
+    title: "Hafidz Maulana — Portfolio",
+    description:
+      "Automation & IoT Engineering portfolio showcasing projects, experience, and skills.",
+    url: "https://hafidzm.vercel.app",
+    siteName: "Hafidz Maulana",
+    images: [
+      {
+        url: "/icon.png",
+        width: 512,
+        height: 512,
+        alt: "Hafidz Logo",
+      },
+    ],
+    type: "website",
   },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body
