@@ -91,25 +91,37 @@ export default function Home() {
   // modal state
   const [selected, setSelected] = useState<ModalProject | null>(null);
 
-    // slider state (responsive)
-  const [page, setPage] = useState(0);
-  const [perPage, setPerPage] = useState(3);
+   // slider state (responsive)
+const [page, setPage] = useState(0);
+const [perPage, setPerPage] = useState(3);
 
-  useEffect(() => {
-    const update = () => {
-      const isMobile = window.innerWidth < 768; // md breakpoint
-      setPerPage(isMobile ? 1 : 3);
-      setPage(0); // reset biar ga nyangkut di halaman yang gak ada
-    };
+useEffect(() => {
+  const update = () => {
+    const nextPerPage = window.innerWidth < 768 ? 1 : 3;
 
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
+    // cuma update kalau berubah (biar gak reset random)
+    setPerPage((prevPerPage) => {
+      if (prevPerPage === nextPerPage) return prevPerPage;
 
-  const pages = Math.max(1, Math.ceil(projects.length / perPage));
-  const prev = () => setPage((p) => (p - 1 + pages) % pages);
-  const next = () => setPage((p) => (p + 1) % pages);
+      // kalau perPage berubah, pastiin page masih valid
+      setPage((p) => {
+        const nextPages = Math.max(1, Math.ceil(projects.length / nextPerPage));
+        return Math.min(p, nextPages - 1);
+      });
+
+      return nextPerPage;
+    });
+  };
+
+  update();
+  window.addEventListener("resize", update);
+  return () => window.removeEventListener("resize", update);
+}, []);
+
+const pages = Math.max(1, Math.ceil(projects.length / perPage));
+const prev = () => setPage((p) => (p - 1 + pages) % pages);
+const next = () => setPage((p) => (p + 1) % pages);
+
 
 
   useEffect(() => {
