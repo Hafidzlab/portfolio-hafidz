@@ -13,27 +13,37 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Hafidz Maulana — Portfolio",
+  title: "Hafidz Maulana — Portfolio Web",
   description:
-    "Automation & IoT Engineering portfolio showcasing projects, experience, and skills.",
+    "Showcasing Automation & IoT projects, from embedded systems to smart monitoring.",
+
   icons: {
     icon: "/icon.png",
   },
+
   openGraph: {
-    title: "Hafidz Maulana — Portfolio",
+    title: "Hafidz Maulana — Portfolio Web",
     description:
-      "Automation & IoT Engineering portfolio showcasing projects, experience, and skills.",
+      "Showcasing Automation & IoT projects, from embedded systems to smart monitoring.",
     url: "https://hafidzm.vercel.app",
     siteName: "Hafidz Maulana",
     images: [
       {
-        url: "/icon.png",
+        url: "/og.png",
         width: 512,
         height: 512,
-        alt: "Hafidz Logo",
+        alt: "Hafidz Maulana Portfolio",
       },
     ],
     type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Hafidz Maulana — Portfolio Web",
+    description:
+      "Showcasing Automation & IoT projects, from embedded systems to smart monitoring.",
+    images: ["/og.png"],
   },
 };
 
