@@ -1,16 +1,17 @@
 "use client";
-import HoverCard from "../components/HoverCard";
-
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Building2, MapPin, CalendarDays } from "lucide-react";
+import dynamic from "next/dynamic";
+
 
 import SplashScreen from "../components/SplashScreen";
 import Navbar from "../components/Navbar";
 import TypingText from "../components/TypingText";
-import Starfield from "../components/Starfield";
-import CursorGlow from "../components/CursorFollower";
+const Starfield = dynamic(() => import("../components/Starfield"), { ssr: false });
+const CursorGlow = dynamic(() => import("../components/CursorFollower"), { ssr: false });
+
 
 import ProjectCard from "../components/ProjectCard";
 import ProjectModal, { Project as ModalProject } from "../components/ProjectModal";
@@ -34,7 +35,7 @@ function Section({
   return (
     <section
       id={id}
-      className="relative z-5 min-h-screen flex items-center justify-center pt-5 text-center px-6"
+      className={`relative z-10 min-h-screen flex items-center justify-center pt-5 text-center px-6 ${className}`}
     >
       <div className="mx-auto max-w-6xl">
         <h2 className="text-center text-3xl md:text-4xl lg:text-5xl font-extrabold bg-gradient-to-r from-sky-200 via-blue-300 to-cyan-200 bg-clip-text text-transparent drop-shadow">
@@ -44,45 +45,6 @@ function Section({
         <div className="mt-4 md:mt-6">{children}</div>
       </div>
     </section>
-  );
-}
-
-function MetaRow({ icon, text }: { icon: ReactNode; text: string }) {
-  return (
-    <div className="flex items-center gap-2 text-white/60">
-      <span className="shrink-0">{icon}</span>
-      <span className="text-sm md:text-base">{text}</span>
-    </div>
-  );
-}
-
-function ExperienceCard({
-  title,
-  company,
-  location,
-  date,
-  description,
-}: {
-  title: string;
-  company: string;
-  location: string;
-  date: string;
-  description: string;
-}) {
-  return (
-    <HoverCard className="p-6">
-      <h3 className="text-white font-bold text-lg md:text-xl">{title}</h3>
-
-      <div className="mt-3 space-y-2">
-        <MetaRow icon={<Building2 size={18} className="text-sky-300" />} text={company} />
-        <MetaRow icon={<MapPin size={18} className="text-sky-300" />} text={location} />
-        <MetaRow icon={<CalendarDays size={18} className="text-sky-300" />} text={date} />
-      </div>
-
-      <p className="mt-5 text-white/70 text-sm md:text-base leading-relaxed">
-        {description}
-      </p>
-    </HoverCard>
   );
 }
 
@@ -117,30 +79,60 @@ const experiences = [
     location: "Semarang, Central Java, Indonesia",
     date: "September – Desember 2024",
     description:
-      "      Leading weekly lab sessions for 20+ students in testing and developing practical modules. Conducting preliminary tests and explaining module material to students. Guiding and directing students to understand practical concepts and their implementation during laboratory sessions.",
+      "Leading weekly lab sessions for 20+ students in testing and developing practical modules. Conducting preliminary tests and explaining module material to students. Guiding and directing students to understand practical concepts and their implementation during laboratory sessions.",
   },
 ];
 
 export default function Home() {
-  // ✅ (1) state splash (sama seperti punyamu)
+  // 1️⃣ SEMUA useState di atas
   const [showSplash, setShowSplash] = useState(true);
+  const [mounted, setMounted] = useState(false);
+  const [selected, setSelected] = useState<ModalProject | null>(null);
 
-  // ✅ (2) useEffect timer
+  const [page, setPage] = useState(0);
+  const perPage = 3;
+  const pages = Math.max(1, Math.ceil(projects.length / perPage));
+  const prev = () => setPage((p) => (p - 1 + pages) % pages);
+  const next = () => setPage((p) => (p + 1) % pages);
+
+  // 2️⃣ useEffect di atas
   useEffect(() => {
-    const t = window.setTimeout(() => setShowSplash(false), 1800);
-    return () => window.clearTimeout(t);
+    setMounted(true);
+    const t = setTimeout(() => setShowSplash(false), 1800);
+    return () => clearTimeout(t);
   }, []);
 
-  // ✅ (3) early return splash (biar gak render halaman di belakangnya)
+  // 3️⃣ return kondisional
+  if (!mounted) return null;
+
   if (showSplash) {
     return (
       <SplashScreen
         title="Hafidz Maulana"
-        subtitle="Entering the hafidz universe..."
+        subtitle="Entering the hafidz's universe..."
         durationMs={1800}
       />
     );
   }
+
+  // 4️⃣ RETURN UTAMA (INI ISI HALAMAN KAMU YANG PANJANG ITU)
+  return (
+    <>
+      <Navbar />
+      <Starfield />
+      <CursorGlow />
+
+      {/* HOME */}
+      <main id="home" className="relative z-10 min-h-screen pt-24">
+        {/* …dst, SEMUA kode kamu LANJUTKAN DI SINI */}
+      </main>
+
+      {/* section lain dst */}
+    </>
+  );
+}
+
+
 
   // modal state
   const [selected, setSelected] = useState<ModalProject | null>(null);
