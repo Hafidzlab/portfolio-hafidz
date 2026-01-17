@@ -5,10 +5,13 @@ import { Mail, Phone, Linkedin, Github, Instagram, MessageCircle } from "lucide-
 const items = [
 
   {
-    label: "Email",
-    value: "fidzlana22@gmail.com",
-    href: "fidzlana22@gmail.com",
-    icon: <Mail className="h-6 w-6 text-sky-300" />,
+  label: "Email",
+  value: "fidzlana22@gmail.com",
+  href:
+    "mailto:fidzlana22@gmail.com" +
+    "?subject=Portfolio%20Inquiry" +
+    "&body=Hi%20Hafidz,%0A%0AI%20found%20your%20portfolio%20and%20would%20like%20to%20discuss...",
+  icon: <Mail className="h-6 w-6 text-sky-300" />,
   },
   {
     label: "LinkedIn",
@@ -39,7 +42,7 @@ const items = [
 export default function ConnectSection() {
   return (
     <div className="mx-auto max-w-6xl">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 justify-items-center">
 
         {items.map((it) => (
           <a
