@@ -91,12 +91,26 @@ export default function Home() {
   // modal state
   const [selected, setSelected] = useState<ModalProject | null>(null);
 
-  // slider state
+    // slider state (responsive)
   const [page, setPage] = useState(0);
-  const perPage = 3;
+  const [perPage, setPerPage] = useState(3);
+
+  useEffect(() => {
+    const update = () => {
+      const isMobile = window.innerWidth < 768; // md breakpoint
+      setPerPage(isMobile ? 1 : 3);
+      setPage(0); // reset biar ga nyangkut di halaman yang gak ada
+    };
+
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
   const pages = Math.max(1, Math.ceil(projects.length / perPage));
   const prev = () => setPage((p) => (p - 1 + pages) % pages);
   const next = () => setPage((p) => (p + 1) % pages);
+
 
   useEffect(() => {
     setMounted(true);
