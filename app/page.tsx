@@ -150,31 +150,32 @@ const next = () => setPage((p) => (p + 1) % pages);
 
       {/* HOME */}
       <main
-        id="home"
-        className="relative z-10 min-h-screen flex items-center justify-center pt-24 text-center px-6"
-      >
-        <div className="max-w-4xl">
-          <h1 className="text-6xl md:text-6xl font-extrabold bg-gradient-to-r from-sky-300 via-blue-400 to-cyan-300 bg-clip-text text-transparent drop-shadow">
-            Hello World, I&apos;m Hafidz!
-          </h1>
+  id="home"
+  className="relative z-10 min-h-screen flex items-center justify-center pt-24 text-center px-6"
+>
+  <div className="max-w-4xl relative -translate-y-20 md:-translate-y-24">
+    <h1 className="text-6xl md:text-6xl font-extrabold bg-gradient-to-r from-sky-300 via-blue-400 to-cyan-300 bg-clip-text text-transparent drop-shadow">
+      Hello World, I&apos;m Hafidz!
+    </h1>
 
-          <p className="mt-4 text-lg md:text-2xl text-white/85">
-            I&apos;m passionate about{" "}
-            <TypingText
-              words={[
-                "Automation Engineering",
-                "Internet of Things",
-                "Embedded Systems",
-              ]}
-            />
-          </p>
+    <p className="mt-4 text-lg md:text-2xl text-white/85">
+      I&apos;m passionate about{" "}
+      <TypingText
+        words={[
+          "Automation Engineering",
+          "Internet of Things",
+          "Embedded Systems",
+        ]}
+      />
+    </p>
 
-          <p className="mt-6 text-sm md:text-lg text-white/60">
-            Automation &amp; IoT Engineering Student — building practical projects
-            with sensors, data, and web dashboards.
-          </p>
-        </div>
-      </main>
+    <p className="mt-6 text-sm md:text-lg text-white/60">
+      Automation &amp; IoT Engineering Student — building practical projects
+      with sensors, data, and web dashboards.
+    </p>
+  </div>
+</main>
+
 
       {/* ABOUT */}
       <Section id="about" title="About Me">
