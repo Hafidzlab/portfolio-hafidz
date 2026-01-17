@@ -17,6 +17,8 @@ import TechStackSection from "../components/TechStackSection";
 import ConnectSection from "../components/ConnectSection";
 
 import { projects } from "../data/projects";
+import Footer from "../components/Footer";
+
 
 const Starfield = dynamic(() => import("../components/Starfield"), { ssr: false });
 const CursorGlow = dynamic(() => import("../components/CursorFollower"), { ssr: false });
@@ -405,13 +407,18 @@ const next = () => setPage((p) => (p + 1) % pages);
       </Section>
 
       {/* CONNECT */}
-      <Section id="connect" title="Let's Connect" className="relative">
-        <p className="mt-6 mb-10 text-lg md:text-xl text-white/85 text-center max-w-2xl mx-auto leading-relaxed">
-          I'm always open to discussing new opportunities, collaborations, or just having a chat about technology!
-        </p>
+      {/* CONNECT */}
+<Section id="connect" title="Let's Connect" className="relative">
+  <p className="mt-6 mb-10 text-lg md:text-xl text-white/85 text-center max-w-2xl mx-auto leading-relaxed">
+    I'm always open to discussing new opportunities, collaborations, or just
+    having a chat about technology!
+  </p>
 
-        <ConnectSection />
-      </Section>
+  <ConnectSection />
+</Section>
+
+<Footer />
+
     </>
   );
 }
