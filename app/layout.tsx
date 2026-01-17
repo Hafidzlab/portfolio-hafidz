@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Hafidz Maulana — Portfolio Web",
+  title: "Hafidz Maulana — Portofolio Web",
   description:
     "Showcasing Automation & IoT projects, from embedded systems to smart monitoring.",
 
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-    title: "Hafidz Maulana — Portfolio Web",
+    title: "Hafidz Maulana — Portofolio Web",
     description:
       "Showcasing Automation & IoT projects, from embedded systems to smart monitoring.",
     url: "https://hafidzm.vercel.app",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
         url: "/og.png",
         width: 512,
         height: 512,
-        alt: "Hafidz Maulana Portfolio",
+        alt: "Hafidz Maulana Portofolio",
       },
     ],
     type: "website",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Hafidz Maulana — Portfolio Web",
+    title: "Hafidz Maulana — Portofolio Web",
     description:
       "Showcasing Automation & IoT projects, from embedded systems to smart monitoring.",
     images: ["/og.png"],
