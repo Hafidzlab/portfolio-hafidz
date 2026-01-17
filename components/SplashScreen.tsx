@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export default function SplashScreen({
   title,
   subtitle,
-  durationMs = 1800,
+  durationMs = 3000,
 }: {
   title: string;
   subtitle: string;
