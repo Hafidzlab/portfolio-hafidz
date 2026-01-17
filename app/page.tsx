@@ -35,7 +35,6 @@ function Section({
     <section
       id={id}
       className="relative z-5 min-h-screen flex items-center justify-center pt-5 text-center px-6"
-
     >
       <div className="mx-auto max-w-6xl">
         <h2 className="text-center text-3xl md:text-4xl lg:text-5xl font-extrabold bg-gradient-to-r from-sky-200 via-blue-300 to-cyan-200 bg-clip-text text-transparent drop-shadow">
@@ -87,7 +86,6 @@ function ExperienceCard({
   );
 }
 
-
 const experiences = [
   {
     title: "Web - Based Internal Monitoring System",
@@ -124,12 +122,25 @@ const experiences = [
 ];
 
 export default function Home() {
-  // Splash (optional). Kalau kamu gak mau splash, tinggal hapus blok useEffect + render SplashScreen.
+  // ✅ (1) state splash (sama seperti punyamu)
   const [showSplash, setShowSplash] = useState(true);
+
+  // ✅ (2) useEffect timer
   useEffect(() => {
     const t = window.setTimeout(() => setShowSplash(false), 1800);
     return () => window.clearTimeout(t);
   }, []);
+
+  // ✅ (3) early return splash (biar gak render halaman di belakangnya)
+  if (showSplash) {
+    return (
+      <SplashScreen
+        title="Hafidz Maulana"
+        subtitle="Entering the hafidz universe..."
+        durationMs={1800}
+      />
+    );
+  }
 
   // modal state
   const [selected, setSelected] = useState<ModalProject | null>(null);
@@ -143,8 +154,6 @@ export default function Home() {
 
   return (
     <>
-      {showSplash && <SplashScreen />}
-
       <Navbar />
       <Starfield />
       <CursorGlow />
@@ -178,146 +187,138 @@ export default function Home() {
       </main>
 
       {/* ABOUT */}
-     <Section id="about" title="About Me">
-  <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6">
-
-
-    {/* FOTO */}
-    <div className="flex justify-center md:justify-end md:pr-16 md:pt-0">
-      <div className="relative w-56 h-56 md:w-72 md:h-72 rounded-full p-[5px] bg-gradient-to-r from-blue-500 via-sky-400 to-cyan-300 shadow-xl shadow-cyan-500/20 animate-float">
-        <div className="relative w-full h-full rounded-full overflow-hidden bg-black/30">
-          <Image
-            src="/Hafidz.jpeg"
-            alt="Hafidz"
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
-      </div>
-    </div>
-
-    {/* TEKS */}
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-6 md:p-7 backdrop-blur md:-ml-2 text-left">
-      <p className="text-sm md:text-base leading-relaxed text-white/75">
-        I am an active Automation Engineering Technology student at Diponegoro
-        University with a strong interest in industrial automation, control
-        systems, and the Internet of Things (IoT). I have experience in
-        developing automation and monitoring systems using microcontrollers
-        and sensors, as well as designing and testing electronic and control-based
-        systems.
-      </p>
-
-      <div className="mt-6 flex flex-wrap gap-4">
-        <a
-          href="https://www.linkedin.com/in/hafidzmaulana22"
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex items-center justify-center rounded-xl px-6 py-3 font-semibold text-black bg-gradient-to-r from-sky-400 to-cyan-300 hover:opacity-90 transition"
-        >
-          LinkedIn
-        </a>
-
-        <a
-          href="/CV-HafidzMaulana.pdf"
-          download
-          className="inline-flex items-center justify-center rounded-xl px-6 py-3 font-semibold text-white border border-white/15 bg-white/5 hover:bg-white/10 transition"
-        >
-          Download CV
-        </a>
-      </div>
-    </div>
-
-  </div>
-</Section>
-
-
-
-      {/* EXPERIENCE */}
-<Section id="experience" title="Experience">
-  <div className="relative">
-
-    {/* GARIS TENGAH */}
-    <div className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-[4px] -translate-x-1/2 bg-gradient-to-b from-sky-400/0 via-sky-300/70 to-sky-400/0 md:block" />
-
-    <div className="space-y-16">
-      {experiences.map((exp, idx) => {
-        const isLeft = idx % 2 === 0;
-
-        return (
-          <div
-            key={exp.title}
-            className="relative grid grid-cols-1 md:grid-cols-2 items-start"
-          >
-            {/* TITIK TIMELINE */}
-            <div className="hidden md:block absolute left-1/2 top-8 -translate-x-1/2 z-10">
-              <div className="h-4 w-4 rounded-full bg-sky-300 ring-4 ring-sky-300/25 shadow-lg shadow-sky-400/40" />
-            </div>
-
-            {/* CARD EXPERIENCE */}
-            <div
-              className={
-                isLeft
-                  ? "md:col-start-1 md:pr-12"
-                  : "md:col-start-2 md:pl-12"
-              }
-            >
-              <div
-  className="
-    text-left
-    rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur
-    transform-gpu will-change-transform
-    transition-all duration-300 ease-out
-    hover:-translate-y-2
-    hover:bg-white/10
-    hover:border-sky-300/30
-    hover:shadow-2xl hover:shadow-cyan-500/20
-    hover:ring-1 hover:ring-sky-300/20
-  "
->
-
-                <h3 className="text-white font-bold text-lg md:text-xl">
-                  {exp.title}
-                </h3>
-
-                <div className="mt-3 space-y-2 text-white/70">
-                  <div className="flex items-center gap-2">
-                    <Building2 size={18} className="text-sky-300" />
-                    <span>{exp.company}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <MapPin size={18} className="text-sky-300" />
-                    <span>{exp.location}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <CalendarDays size={18} className="text-sky-300" />
-                    <span>{exp.date}</span>
-                  </div>
-                </div>
-
-                <p className="mt-5 text-white/70 text-sm md:text-base leading-relaxed">
-                  {exp.description}
-                </p>
+      <Section id="about" title="About Me">
+        <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* FOTO */}
+          <div className="flex justify-center md:justify-end md:pr-16 md:pt-0">
+            <div className="relative w-56 h-56 md:w-72 md:h-72 rounded-full p-[5px] bg-gradient-to-r from-blue-500 via-sky-400 to-cyan-300 shadow-xl shadow-cyan-500/20 animate-float">
+              <div className="relative w-full h-full rounded-full overflow-hidden bg-black/30">
+                <Image
+                  src="/Hafidz.jpeg"
+                  alt="Hafidz"
+                  fill
+                  className="object-cover"
+                  priority
+                />
               </div>
             </div>
-
-            {/* KOLOM KOSONG BIAR SIMETRIS */}
-            <div
-              className={
-                isLeft
-                  ? "hidden md:block md:col-start-2"
-                  : "hidden md:block md:col-start-1"
-              }
-            />
           </div>
-        );
-      })}
-    </div>
-  </div>
-</Section>
 
+          {/* TEKS */}
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 md:p-7 backdrop-blur md:-ml-2 text-left">
+            <p className="text-sm md:text-base leading-relaxed text-white/75">
+              I am an active Automation Engineering Technology student at Diponegoro
+              University with a strong interest in industrial automation, control
+              systems, and the Internet of Things (IoT). I have experience in
+              developing automation and monitoring systems using microcontrollers
+              and sensors, as well as designing and testing electronic and control-based
+              systems.
+            </p>
+
+            <div className="mt-6 flex flex-wrap gap-4">
+              <a
+                href="https://www.linkedin.com/in/hafidzmaulana22"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center rounded-xl px-6 py-3 font-semibold text-black bg-gradient-to-r from-sky-400 to-cyan-300 hover:opacity-90 transition"
+              >
+                LinkedIn
+              </a>
+
+              <a
+                href="/CV-HafidzMaulana.pdf"
+                download
+                className="inline-flex items-center justify-center rounded-xl px-6 py-3 font-semibold text-white border border-white/15 bg-white/5 hover:bg-white/10 transition"
+              >
+                Download CV
+              </a>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* EXPERIENCE */}
+      <Section id="experience" title="Experience">
+        <div className="relative">
+          {/* GARIS TENGAH */}
+          <div className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-[4px] -translate-x-1/2 bg-gradient-to-b from-sky-400/0 via-sky-300/70 to-sky-400/0 md:block" />
+
+          <div className="space-y-16">
+            {experiences.map((exp, idx) => {
+              const isLeft = idx % 2 === 0;
+
+              return (
+                <div
+                  key={exp.title}
+                  className="relative grid grid-cols-1 md:grid-cols-2 items-start"
+                >
+                  {/* TITIK TIMELINE */}
+                  <div className="hidden md:block absolute left-1/2 top-8 -translate-x-1/2 z-10">
+                    <div className="h-4 w-4 rounded-full bg-sky-300 ring-4 ring-sky-300/25 shadow-lg shadow-sky-400/40" />
+                  </div>
+
+                  {/* CARD EXPERIENCE */}
+                  <div
+                    className={
+                      isLeft
+                        ? "md:col-start-1 md:pr-12"
+                        : "md:col-start-2 md:pl-12"
+                    }
+                  >
+                    <div
+                      className="
+                        text-left
+                        rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur
+                        transform-gpu will-change-transform
+                        transition-all duration-300 ease-out
+                        hover:-translate-y-2
+                        hover:bg-white/10
+                        hover:border-sky-300/30
+                        hover:shadow-2xl hover:shadow-cyan-500/20
+                        hover:ring-1 hover:ring-sky-300/20
+                      "
+                    >
+                      <h3 className="text-white font-bold text-lg md:text-xl">
+                        {exp.title}
+                      </h3>
+
+                      <div className="mt-3 space-y-2 text-white/70">
+                        <div className="flex items-center gap-2">
+                          <Building2 size={18} className="text-sky-300" />
+                          <span>{exp.company}</span>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <MapPin size={18} className="text-sky-300" />
+                          <span>{exp.location}</span>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <CalendarDays size={18} className="text-sky-300" />
+                          <span>{exp.date}</span>
+                        </div>
+                      </div>
+
+                      <p className="mt-5 text-white/70 text-sm md:text-base leading-relaxed">
+                        {exp.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* KOLOM KOSONG BIAR SIMETRIS */}
+                  <div
+                    className={
+                      isLeft
+                        ? "hidden md:block md:col-start-2"
+                        : "hidden md:block md:col-start-1"
+                    }
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </Section>
 
       {/* PROJECTS */}
       <Section id="projects" title="Projects">
@@ -401,19 +402,13 @@ export default function Home() {
       </Section>
 
       {/* CONNECT */}
-<Section
-  id="connect"
-  title="Let's Connect"
-  className="relative"
->
+      <Section id="connect" title="Let's Connect" className="relative">
+        <p className="mt-6 mb-10 text-lg md:text-xl text-white/85 text-center max-w-2xl mx-auto leading-relaxed">
+          I'm always open to discussing new opportunities, collaborations, or just having a chat about technology!
+        </p>
 
-  <p className="mt-6 mb-10 text-lg md:text-xl text-white/85 text-center max-w-2xl mx-auto leading-relaxed">
-    I'm always open to discussing new opportunities, collaborations, or just having a chat about technology!
-  </p>
-
-  <ConnectSection />
-</Section>
-
+        <ConnectSection />
+      </Section>
     </>
   );
 }

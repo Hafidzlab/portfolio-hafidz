@@ -1,66 +1,55 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 
-export default function Starfield() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+export default function SplashScreen({
+  title = "Hafidz Maulana",
+  subtitle = "Entering the hafidz's universe...",
+  durationMs = 1800,
+}: {
+  title?: string;
+  subtitle?: string;
+  durationMs?: number;
+}) {
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const canvas = canvasRef.current!;
-    const ctx = canvas.getContext("2d")!;
-    let stars: any[] = [];
-    let raf: number;
+    const start = Date.now();
+    const id = window.setInterval(() => {
+      const p = Math.min(100, ((Date.now() - start) / durationMs) * 100);
+      setProgress(p);
+      if (p >= 100) window.clearInterval(id);
+    }, 16);
 
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      stars = Array.from({ length: 200 }, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 1.5,
-        s: Math.random() * 0.4 + 0.1,
-      }));
-    };
+    return () => window.clearInterval(id);
+  }, [durationMs]);
 
-    const draw = () => {
-      ctx.fillStyle = "black";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+  return (
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#06060a]">
+      <div className="relative z-10 text-center">
+        {/* Ring */}
+        <div className="mx-auto mb-8 h-44 w-44 rounded-full p-[5px] bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500">
+          <div className="relative h-full w-full rounded-full bg-[#05070b]">
+            <div className="absolute left-1/2 top-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black" />
+            <div className="absolute right-6 top-16 h-4 w-4 rounded-full bg-cyan-300" />
+            <div className="absolute right-4 top-20 h-3 w-3 rounded-full bg-purple-400" />
+          </div>
+        </div>
 
-      const g = ctx.createRadialGradient(
-        canvas.width / 2,
-        canvas.height / 2,
-        100,
-        canvas.width / 2,
-        canvas.height / 2,
-        canvas.width
-      );
-      g.addColorStop(0, "rgba(59,130,246,0.15)");
-      g.addColorStop(0.5, "rgba(14,165,233,0.08)");
-      g.addColorStop(1, "black");
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+        <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-purple-300 via-cyan-300 to-blue-300 bg-clip-text text-transparent">
+          {title}
+        </h1>
 
-      stars.forEach((s) => {
-        s.y += s.s;
-        if (s.y > canvas.height) s.y = 0;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = "white";
-        ctx.fill();
-      });
+        <p className="mt-4 text-white/50 text-lg">{subtitle}</p>
 
-      raf = requestAnimationFrame(draw);
-    };
-
-    resize();
-    draw();
-    window.addEventListener("resize", resize);
-
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
-
-  return <canvas ref={canvasRef} className="fixed inset-0 -z-10" />;
+        {/* Progress bar */}
+        <div className="mx-auto mt-6 h-2 w-[360px] max-w-[80vw] overflow-hidden rounded-full bg-white/10">
+          <div
+            className="h-full rounded-full bg-gradient-to-r from-purple-500 via-cyan-400 to-blue-500 transition-[width] duration-75"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+      </div>
+    </div>
+  );
 }
