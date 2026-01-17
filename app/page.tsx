@@ -1,17 +1,14 @@
 "use client";
+
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { Building2, MapPin, CalendarDays } from "lucide-react";
-import dynamic from "next/dynamic";
-
 
 import SplashScreen from "../components/SplashScreen";
 import Navbar from "../components/Navbar";
 import TypingText from "../components/TypingText";
-const Starfield = dynamic(() => import("../components/Starfield"), { ssr: false });
-const CursorGlow = dynamic(() => import("../components/CursorFollower"), { ssr: false });
-
 
 import ProjectCard from "../components/ProjectCard";
 import ProjectModal, { Project as ModalProject } from "../components/ProjectModal";
@@ -20,6 +17,9 @@ import TechStackSection from "../components/TechStackSection";
 import ConnectSection from "../components/ConnectSection";
 
 import { projects } from "../data/projects";
+
+const Starfield = dynamic(() => import("../components/Starfield"), { ssr: false });
+const CursorGlow = dynamic(() => import("../components/CursorFollower"), { ssr: false });
 
 function Section({
   id,
@@ -84,25 +84,26 @@ const experiences = [
 ];
 
 export default function Home() {
-  // 1️⃣ SEMUA useState di atas
+  // splash + mount guard
   const [showSplash, setShowSplash] = useState(true);
   const [mounted, setMounted] = useState(false);
+
+  // modal state
   const [selected, setSelected] = useState<ModalProject | null>(null);
 
+  // slider state
   const [page, setPage] = useState(0);
   const perPage = 3;
   const pages = Math.max(1, Math.ceil(projects.length / perPage));
   const prev = () => setPage((p) => (p - 1 + pages) % pages);
   const next = () => setPage((p) => (p + 1) % pages);
 
-  // 2️⃣ useEffect di atas
   useEffect(() => {
     setMounted(true);
     const t = setTimeout(() => setShowSplash(false), 1800);
     return () => clearTimeout(t);
   }, []);
 
-  // 3️⃣ return kondisional
   if (!mounted) return null;
 
   if (showSplash) {
@@ -114,35 +115,6 @@ export default function Home() {
       />
     );
   }
-
-  // 4️⃣ RETURN UTAMA (INI ISI HALAMAN KAMU YANG PANJANG ITU)
-  return (
-    <>
-      <Navbar />
-      <Starfield />
-      <CursorGlow />
-
-      {/* HOME */}
-      <main id="home" className="relative z-10 min-h-screen pt-24">
-        {/* …dst, SEMUA kode kamu LANJUTKAN DI SINI */}
-      </main>
-
-      {/* section lain dst */}
-    </>
-  );
-}
-
-
-
-  // modal state
-  const [selected, setSelected] = useState<ModalProject | null>(null);
-
-  // slider state
-  const [page, setPage] = useState(0);
-  const perPage = 3;
-  const pages = Math.max(1, Math.ceil(projects.length / perPage));
-  const prev = () => setPage((p) => (p - 1 + pages) % pages);
-  const next = () => setPage((p) => (p + 1) % pages);
 
   return (
     <>
@@ -252,9 +224,7 @@ export default function Home() {
                   {/* CARD EXPERIENCE */}
                   <div
                     className={
-                      isLeft
-                        ? "md:col-start-1 md:pr-12"
-                        : "md:col-start-2 md:pl-12"
+                      isLeft ? "md:col-start-1 md:pr-12" : "md:col-start-2 md:pl-12"
                     }
                   >
                     <div
@@ -376,7 +346,9 @@ export default function Home() {
                   onClick={() => setPage(i)}
                   type="button"
                   className={`h-2 rounded-full transition ${
-                    i === page ? "w-10 bg-purple-400/90" : "w-2 bg-white/20 hover:bg-white/35"
+                    i === page
+                      ? "w-10 bg-purple-400/90"
+                      : "w-2 bg-white/20 hover:bg-white/35"
                   }`}
                   aria-label={`Go to slide ${i + 1}`}
                 />
@@ -384,7 +356,11 @@ export default function Home() {
             </div>
           )}
 
-          <ProjectModal open={!!selected} project={selected as any} onClose={() => setSelected(null)} />
+          <ProjectModal
+            open={!!selected}
+            project={selected as any}
+            onClose={() => setSelected(null)}
+          />
         </div>
       </Section>
 
