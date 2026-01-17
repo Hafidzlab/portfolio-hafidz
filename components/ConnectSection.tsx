@@ -1,11 +1,10 @@
 "use client";
 
-import { Mail, Phone, Linkedin, Github, Instagram, MessageCircle } from "lucide-react";
+import { Mail, Linkedin, Github, Instagram, MessageCircle } from "lucide-react";
 
-const items = [
-
+const links = [
   {
-  label: "Email",
+    label: "Email",
   value: "fidzlana22@gmail.com",
   href:
     "mailto:fidzlana22@gmail.com" +
@@ -27,14 +26,14 @@ const items = [
   },
   {
     label: "Instagram",
-    value: "@hafizdmaulana21_",
-    href: "https://instagram.com/hafizdmaulana21_",
+    value: "@hafidzmaulana21_",
+    href: "https://instagram.com/hafidzmaulana21_",
     icon: <Instagram className="h-6 w-6 text-sky-300" />,
   },
   {
     label: "LINE",
-    value: "hafizd003",
-    href: "https://line.me/ti/p/hafizd003",
+    value: "hafidz003",
+    href: "https://line.me/ti/p/~hafidz003",
     icon: <MessageCircle className="h-6 w-6 text-sky-300" />,
   },
 ];
@@ -42,35 +41,29 @@ const items = [
 export default function ConnectSection() {
   return (
     <div className="mx-auto max-w-6xl">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 justify-items-center">
-
-        {items.map((it) => (
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+        {links.map((item) => (
           <a
-            key={it.label}
-            href={it.href}
-            target="_blank"
-            rel="noreferrer"
+            key={item.label}
+            href={item.href}
+            target={item.href.startsWith("mailto:") ? undefined : "_blank"}
+            rel={item.href.startsWith("mailto:") ? undefined : "noreferrer"}
             className="
               group
-              rounded-2xl bg-white/5 border border-white/10 backdrop-blur
-              p-6
+              rounded-2xl border border-white/10 bg-white/5 backdrop-blur
+              px-6 py-5
+              min-h-[110px]
               flex items-center gap-4
-              transform-gpu will-change-transform
-              transition-all duration-300 ease-out
-              hover:-translate-y-2
-              hover:bg-white/[0.08]
-              hover:border-sky-300/30
-              hover:shadow-2xl hover:shadow-cyan-500/20
-              hover:ring-1 hover:ring-sky-300/15
+              transition
+              hover:bg-white/10 hover:border-sky-300/30 hover:-translate-y-1
+              hover:shadow-2xl hover:shadow-cyan-500/10
             "
           >
-            <div className="shrink-0 transition-transform duration-300 group-hover:scale-110">
-              {it.icon}
-            </div>
+            <div className="shrink-0">{item.icon}</div>
 
-            <div className="min-w-0">
-              <div className="text-white font-bold text-lg">{it.label}</div>
-              <div className="text-white/60 text-sm truncate">{it.value}</div>
+            <div className="min-w-0 text-left">
+              <div className="font-semibold text-white text-base">{item.label}</div>
+              <div className="text-sm text-white/55 truncate">{item.value}</div>
             </div>
           </a>
         ))}
