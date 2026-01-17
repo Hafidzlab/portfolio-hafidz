@@ -219,7 +219,7 @@ export default function Home() {
         </a>
 
         <a
-          href="/CV-Hafidz - Maulana.pdf"
+          href="/CV - Hafidz Maulana.pdf"
           download
           className="inline-flex items-center justify-center rounded-xl px-6 py-3 font-semibold text-white border border-white/15 bg-white/5 hover:bg-white/10 transition"
         >
